@@ -76,19 +76,7 @@
                 <small class="text-muted">Ketik ulang password yang sama</small>
             </div>
 
-            <div class="col-md-12">
-                <label class="form-label fw-semibold" style="color: var(--color-30);">
-                    <i class="bi bi-shield-lock me-1" style="color: var(--color-10);"></i> Role
-                </label>
-                <select name="role" class="form-select @error('role') is-invalid @enderror">
-                    <option value="user" {{ old('role') == 'user' ? 'selected' : '' }}>Anggota</option>
-                    <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Admin</option>
-                </select>
-                @error('role')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
-                <small class="text-muted">Role "Admin" memiliki akses ke semua fitur</small>
-            </div>
+           
         </div>
 
         <hr class="my-4" style="border-color: var(--border-light);">
@@ -115,8 +103,7 @@
                     <p class="mb-0 small text-dark">
                         <i class="bi bi-check-circle text-success me-1"></i> Email harus unik dan belum terdaftar<br>
                         <i class="bi bi-check-circle text-success me-1"></i> Password minimal 8 karakter<br>
-                        <i class="bi bi-check-circle text-success me-1"></i> Role "Admin" memiliki akses ke semua fitur
-                    </p>
+                       
                 </div>
             </div>
         </div>

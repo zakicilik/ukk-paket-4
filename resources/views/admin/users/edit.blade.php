@@ -77,19 +77,7 @@
                 <small class="text-muted">Ketik ulang password baru jika diubah</small>
             </div>
 
-            <div class="col-md-12">
-                <label class="form-label fw-semibold" style="color: var(--color-30);">
-                    <i class="bi bi-shield-lock me-1" style="color: var(--color-10);"></i> Role
-                </label>
-                <select name="role" class="form-select @error('role') is-invalid @enderror">
-                    <option value="user" {{ old('role', $user->role) == 'user' ? 'selected' : '' }}>Anggota</option>
-                    <option value="admin" {{ old('role', $user->role) == 'admin' ? 'selected' : '' }}>Admin</option>
-                </select>
-                @error('role')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
-                <small class="text-muted">Role "Admin" memiliki akses ke semua fitur</small>
-            </div>
+           
         </div>
 
         <hr class="my-4" style="border-color: var(--border-light);">
@@ -116,7 +104,7 @@
                     <p class="mb-0 small text-dark">
                         <i class="bi bi-check-circle text-success me-1"></i> Email harus unik dan belum terdaftar oleh anggota lain<br>
                         <i class="bi bi-check-circle text-success me-1"></i> Kosongkan password jika tidak ingin mengubahnya<br>
-                        <i class="bi bi-check-circle text-success me-1"></i> Role "Admin" memiliki akses ke semua fitur
+                        
                     </p>
                 </div>
             </div>
