@@ -110,21 +110,28 @@
                     </div>
                     
                     @php
-                        $dipinjam = $borrowings->where('book_id', $book->id)
-                            ->whereIn('status', ['dipinjam', 'menunggu'])->count();
+                        // Cek status spesifik yang sedang dialami user
+                        $statusUser = $borrowings->where('book_id', $book->id)->first();
+                        $sedangDipinjam = $statusUser && in_array($statusUser->status, ['dipinjam', 'menunggu']);
                     @endphp
 
-                    @if($book->stock > 0 && $dipinjam == 0)
+                    @if($book->stock > 0 && !$sedangDipinjam)
                         <form action="{{ route('user.pinjam', $book->id) }}" method="POST" class="d-inline">
                             @csrf
-                            <button type="submit" class="btn-primary-glass" style="padding: 0.4rem 1rem; font-size: 0.85rem;" onclick="return confirm('Yakin ingin meminjam buku {{ addslashes($book->title) }}?')">
+                            <button type="submit" class="btn-primary-glass" style="padding: 0.4rem 1rem; font-size: 0.85rem;" onclick="return confirm('Yakin ingin meminjam buku {{ addslashes($book->title) }}? Peminjaman akan menunggu konfirmasi admin.')">
                                 <i class="bi bi-cart-plus me-1"></i> Pinjam
                             </button>
                         </form>
-                    @elseif($dipinjam > 0)
-                        <span class="badge-warning">
-                            <i class="bi bi-clock-history me-1"></i> Sedang Dipinjam
-                        </span>
+                    @elseif($sedangDipinjam)
+                        @if($statusUser->status == 'menunggu')
+                            <span class="badge-info">
+                                <i class="bi bi-hourglass-split me-1"></i> Menunggu Konfirmasi
+                            </span>
+                        @else
+                            <span class="badge-warning">
+                                <i class="bi bi-book-half me-1"></i> Sedang Dipinjam
+                            </span>
+                        @endif
                     @else
                         <span class="badge" style="background: #F3F4F6; color: #6B7280; padding: 0.35rem 0.85rem; border-radius: 30px; font-weight: 500;">
                             <i class="bi bi-x-octagon me-1"></i> Tidak Tersedia
@@ -187,7 +194,6 @@
         --card-shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.12);
     }
     
-    /* Golden Ratio untuk card */
     .glass-card {
         background: white;
         border-radius: 21px;
@@ -201,7 +207,78 @@
         box-shadow: var(--card-shadow-hover);
     }
     
-    /* Golden Ratio untuk input */
+    .btn-primary-glass {
+        background: linear-gradient(135deg, var(--color-10), var(--color-10-dark));
+        border: none;
+        border-radius: 13px;
+        padding: 0.5rem 1rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        color: white;
+    }
+    
+    .btn-primary-glass:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(212, 163, 115, 0.4);
+        color: white;
+    }
+    
+    .btn-outline-glass {
+        background: transparent;
+        border: 1px solid var(--border-light);
+        border-radius: 13px;
+        padding: 0.4rem 1rem;
+        font-size: 0.85rem;
+        color: var(--color-30);
+        transition: 0.2s;
+    }
+    
+    .btn-outline-glass:hover {
+        background: rgba(212, 163, 115, 0.1);
+        border-color: var(--color-10);
+        color: var(--color-10);
+    }
+    
+    .badge-success {
+        background: #D1FAE5;
+        color: #065F46;
+        padding: 0.35rem 0.85rem;
+        border-radius: 30px;
+        font-weight: 500;
+    }
+    
+    .badge-warning {
+        background: #FEF3C7;
+        color: #92400E;
+        padding: 0.35rem 0.85rem;
+        border-radius: 30px;
+        font-weight: 500;
+    }
+    
+    .badge-info {
+        background: #E0F2FE;
+        color: #075985;
+        padding: 0.35rem 0.85rem;
+        border-radius: 30px;
+        font-weight: 500;
+    }
+    
+    .empty-icon-box {
+        width: 80px;
+        height: 80px;
+        background: #F3F4F6;
+        border-radius: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1.2rem;
+    }
+    
+    .empty-icon-box i {
+        font-size: 2.5rem;
+        color: #9CA3AF;
+    }
+    
     .input-group .input-group-text,
     .input-group .form-control {
         border-radius: 21px !important;
@@ -227,40 +304,6 @@
         border-color: var(--color-10);
     }
     
-    /* Badge styles dari layout */
-    .badge-success {
-        background: #D1FAE5;
-        color: #065F46;
-        padding: 0.35rem 0.85rem;
-        border-radius: 30px;
-        font-weight: 500;
-    }
-    
-    .badge-warning {
-        background: #FEF3C7;
-        color: #92400E;
-        padding: 0.35rem 0.85rem;
-        border-radius: 30px;
-        font-weight: 500;
-    }
-    
-    .empty-icon-box {
-        width: 80px;
-        height: 80px;
-        background: #F3F4F6;
-        border-radius: 60px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 0 auto 1.2rem;
-    }
-    
-    .empty-icon-box i {
-        font-size: 2.5rem;
-        color: #9CA3AF;
-    }
-    
-    /* Animasi golden ratio */
     @keyframes fadeIn {
         from {
             opacity: 0;
@@ -276,21 +319,9 @@
         animation: fadeIn 0.4s ease forwards;
     }
     
-    .book-item:nth-child(1) { animation-delay: 0.05s; }
-    .book-item:nth-child(2) { animation-delay: 0.1s; }
-    .book-item:nth-child(3) { animation-delay: 0.15s; }
-    .book-item:nth-child(4) { animation-delay: 0.2s; }
-    .book-item:nth-child(5) { animation-delay: 0.25s; }
-    .book-item:nth-child(6) { animation-delay: 0.3s; }
-    
-    /* Responsive */
     @media (max-width: 768px) {
         .glass-card {
             border-radius: 16px;
-        }
-        
-        .book-item {
-            animation-delay: 0s !important;
         }
     }
 </style>

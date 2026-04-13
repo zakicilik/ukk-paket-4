@@ -404,6 +404,131 @@
             border-radius: 13px;
         }
 
+        /* ========= FORM STYLING UNTUK BOOKS & USERS ========= */
+        
+        /* Label styling lebih rapi */
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+        
+        .form-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: var(--color-30);
+        }
+        
+        .form-label .label-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 26px;
+            height: 26px;
+            background: rgba(212, 163, 115, 0.12);
+            border-radius: 8px;
+            color: var(--color-10);
+            font-size: 0.85rem;
+        }
+        
+        /* Input styling lebih baik */
+        .form-control, .form-select {
+            border-radius: 12px;
+            border: 1px solid var(--border-light);
+            padding: 0.6rem 1rem;
+            background: #fefefe;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+        
+        .form-control:focus, .form-select:focus {
+            border-color: var(--color-10);
+            box-shadow: 0 0 0 3px rgba(212, 163, 115, 0.15);
+            outline: none;
+            background: white;
+        }
+        
+        .form-control::placeholder {
+            color: #bbb5aa;
+            font-size: 0.85rem;
+        }
+        
+        /* Textarea styling */
+        textarea.form-control {
+            resize: vertical;
+            min-height: 100px;
+        }
+        
+        /* Input number styling */
+        input[type=number].form-control::-webkit-inner-spin-button, 
+        input[type=number].form-control::-webkit-outer-spin-button {
+            opacity: 0.5;
+        }
+        
+        /* ISBN wrapper dengan tombol generate */
+        .isbn-wrapper {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        .isbn-wrapper .form-control {
+            flex: 1;
+        }
+        
+        .btn-generate {
+            background: rgba(212, 163, 115, 0.1);
+            border: 1px solid var(--border-light);
+            border-radius: 12px;
+            padding: 0.6rem 1rem;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--color-10-dark);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .btn-generate:hover {
+            background: rgba(212, 163, 115, 0.2);
+            border-color: var(--color-10);
+            transform: translateY(-1px);
+        }
+        
+        /* Form text helper */
+        .form-text {
+            font-size: 0.7rem;
+            margin-top: 6px;
+            display: block;
+            color: #8b8580 !important;
+        }
+        
+        .form-text i {
+            font-size: 0.7rem;
+            margin-right: 4px;
+        }
+        
+        /* Required field star */
+        .text-danger {
+            font-size: 0.7rem;
+            margin-left: 4px;
+        }
+        
+        /* Row spacing */
+        .row.g-4 {
+            --bs-gutter-y: 1.25rem;
+        }
+        
+        /* Card body padding */
+        .glass-card .card-body {
+            padding: 1.5rem;
+        }
+
         /* ========= RESPONSIVE ========= */
         @media (max-width: 768px) {
             .sidebar {
@@ -431,6 +556,20 @@
                 padding: 0.5rem 0.75rem;
                 color: var(--text-dark);
                 box-shadow: var(--card-shadow);
+            }
+            
+            /* Responsive untuk form */
+            .isbn-wrapper {
+                flex-direction: column;
+            }
+            
+            .btn-generate {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .form-label {
+                margin-bottom: 10px;
             }
         }
         
@@ -480,18 +619,6 @@
         h2 { font-size: 1.618rem; }
         h3 { font-size: 1.382rem; }
         p { line-height: 1.618; }
-        
-        /* Form control styling */
-        .form-control, .form-select {
-            border-radius: 13px;
-            border: 1px solid var(--border-light);
-            padding: 0.5rem 1rem;
-        }
-        
-        .form-control:focus, .form-select:focus {
-            border-color: var(--color-10);
-            box-shadow: 0 0 0 0.2rem rgba(212, 163, 115, 0.25);
-        }
         
         /* Modal styling */
         .modal-content {

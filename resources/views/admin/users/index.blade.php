@@ -46,13 +46,13 @@
                                 </small>
                             </div>
                         </div>
-                     </div>
+                     </td>
                     <td>
                         <span class="text-dark">
                             <i class="bi bi-envelope me-1" style="color: var(--color-10);"></i>
                             {{ $u->email }}
                         </span>
-                     </div>
+                     </td>
                     <td>
                         @if($u->role == 'admin')
                             <span class="badge-danger">
@@ -63,13 +63,13 @@
                                 <i class="bi bi-person me-1"></i> Anggota
                             </span>
                         @endif
-                     </div>
+                     </td>
                     <td>
                         <small class="text-muted">
                             <i class="bi bi-calendar me-1" style="color: var(--color-10);"></i>
                             {{ \Carbon\Carbon::parse($u->created_at)->translatedFormat('d F Y') }}
                         </small>
-                     </div>
+                     </td>
                     <td class="text-center">
                         <div class="btn-group" role="group" style="gap: 6px; justify-content: center;">
                             <a href="{{ route('admin.users.edit', $u->id) }}" 
@@ -88,7 +88,7 @@
                                 </button>
                             </form>
                         </div>
-                     </div>
+                     </td>
                  </tr>
                 @empty
                  <tr>
@@ -103,7 +103,7 @@
                                 <i class="bi bi-database-slash me-1"></i> 0 Anggota Tersimpan
                             </span>
                         </div>
-                    </td>
+                     </td>
                  </tr>
                 @endforelse
             </tbody>
@@ -118,16 +118,15 @@
     </div>
 @endif
 
-{{-- Statistik Ringkas --}}
+{{-- Statistik Ringkas (Tanpa Admin) --}}
 @php
     $totalAnggota = $users->count();
-    $totalAdmin = $users->where('role', 'admin')->count();
     $totalUser = $users->where('role', 'user')->count();
     $newMember = $users->where('created_at', '>=', now()->subDays(30))->count();
 @endphp
 
 <div class="row mt-4 g-4">
-    <div class="col-md-3 col-sm-6">
+    <div class="col-md-4 col-sm-6">
         <div class="stat-card">
             <div class="d-flex justify-content-between align-items-center">
                 <div>
@@ -140,20 +139,8 @@
             </div>
         </div>
     </div>
-    <div class="col-md-3 col-sm-6">
-        <div class="stat-card">
-            <div class="d-flex justify-content-between align-items-center">
-                <div>
-                    <small class="text-muted text-uppercase">Admin</small>
-                    <h2 class="fw-bold mb-0 mt-2" style="color: var(--color-30); font-size: 2.618rem;">{{ $totalAdmin }}</h2>
-                </div>
-                <div class="rounded-3 p-3" style="background: rgba(212, 163, 115, 0.15);">
-                    <i class="bi bi-shield-lock fs-2" style="color: var(--color-10);"></i>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-3 col-sm-6">
+   
+    <div class="col-md-4 col-sm-6">
         <div class="stat-card">
             <div class="d-flex justify-content-between align-items-center">
                 <div>
@@ -166,7 +153,8 @@
             </div>
         </div>
     </div>
-    <div class="col-md-3 col-sm-6">
+
+    <div class="col-md-4 col-sm-6">
         <div class="stat-card">
             <div class="d-flex justify-content-between align-items-center">
                 <div>
